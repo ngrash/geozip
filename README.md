@@ -57,7 +57,7 @@ Each postal code entry (`Entry` type) is an array of 12 strings, representing di
 - `Accuracy`
 
 ## Contributing
-Contributions to the `postcode` package are welcome. Please feel free to submit pull requests or open issues for bugs, feature requests, license problems or documentation improvements.
+Contributions to the `geozip` package are welcome. Please feel free to submit pull requests or open issues for bugs, feature requests, license problems or documentation improvements.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
