@@ -1,7 +1,7 @@
-package postcode_test
+package geozip_test
 
 import (
-	"github.com/ngrash/postcode"
+	"github.com/ngrash/geozip"
 	"net/http"
 	"os"
 	"testing"
@@ -15,7 +15,7 @@ func (fn RoundTripperFunc) RoundTrip(req *http.Request) (*http.Response, error) 
 
 func TestFetchCountry_NotModified(t *testing.T) {
 	const requestEtag = "current_etag"
-	postcode.HTTPClient.Transport = RoundTripperFunc(func(r *http.Request) (*http.Response, error) {
+	geozip.HTTPClient.Transport = RoundTripperFunc(func(r *http.Request) (*http.Response, error) {
 		if got, want := r.URL.String(), "https://download.geonames.org/export/zip/DE.zip"; got != want {
 			t.Errorf("client requested %q, want %q", got, want)
 		}
@@ -29,7 +29,7 @@ func TestFetchCountry_NotModified(t *testing.T) {
 			StatusCode: http.StatusNotModified,
 		}, nil
 	})
-	entries, modified, newEtag, err := postcode.FetchCountry("de", requestEtag)
+	entries, modified, newEtag, err := geozip.FetchCountry("de", requestEtag)
 	if entries != nil {
 		t.Errorf("entries = %v, want nil", entries)
 	}
@@ -49,7 +49,7 @@ func TestFetchCountry_Modified(t *testing.T) {
 		requestEtag  = "old_etag"
 		responseEtag = "new_etag"
 	)
-	postcode.HTTPClient.Transport = RoundTripperFunc(func(r *http.Request) (*http.Response, error) {
+	geozip.HTTPClient.Transport = RoundTripperFunc(func(r *http.Request) (*http.Response, error) {
 		if got, want := r.URL.String(), "https://download.geonames.org/export/zip/DE.zip"; got != want {
 			t.Errorf("client requested %q, want %q", got, want)
 		}
@@ -71,7 +71,7 @@ func TestFetchCountry_Modified(t *testing.T) {
 			},
 		}, nil
 	})
-	entries, modified, newEtag, err := postcode.FetchCountry("de", requestEtag)
+	entries, modified, newEtag, err := geozip.FetchCountry("de", requestEtag)
 	if got, want := len(entries), 16477; got != want {
 		t.Errorf("len(entries) = %v, want %v", got, want)
 	}
@@ -96,40 +96,40 @@ func TestFetchCountry_Modified(t *testing.T) {
 		idx := line - 1
 		entry := entries[idx]
 
-		if got, want := entry[postcode.CountryCode], fields[0]; got != want {
+		if got, want := entry[geozip.CountryCode], fields[0]; got != want {
 			t.Errorf("entries[%d]: CountryCode = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.PostalCode], fields[1]; got != want {
+		if got, want := entry[geozip.PostalCode], fields[1]; got != want {
 			t.Errorf("entries[%d]: PostalCode = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.PlaceName], fields[2]; got != want {
+		if got, want := entry[geozip.PlaceName], fields[2]; got != want {
 			t.Errorf("entries[%d]: PlaceName = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.AdminName1], fields[3]; got != want {
+		if got, want := entry[geozip.AdminName1], fields[3]; got != want {
 			t.Errorf("entries[%d]: AdminName1 = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.AdminCode1], fields[4]; got != want {
+		if got, want := entry[geozip.AdminCode1], fields[4]; got != want {
 			t.Errorf("entries[%d]: AdminCode1 = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.AdminName2], fields[5]; got != want {
+		if got, want := entry[geozip.AdminName2], fields[5]; got != want {
 			t.Errorf("entries[%d]: AdminName2 = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.AdminCode2], fields[6]; got != want {
+		if got, want := entry[geozip.AdminCode2], fields[6]; got != want {
 			t.Errorf("entries[%d]: AdminCode2 = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.AdminName3], fields[7]; got != want {
+		if got, want := entry[geozip.AdminName3], fields[7]; got != want {
 			t.Errorf("entries[%d]: AdminName3 = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.AdminCode3], fields[8]; got != want {
+		if got, want := entry[geozip.AdminCode3], fields[8]; got != want {
 			t.Errorf("entries[%d]: AdminCode3 = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.Latitude], fields[9]; got != want {
+		if got, want := entry[geozip.Latitude], fields[9]; got != want {
 			t.Errorf("entries[%d]: Latitude = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.Longitude], fields[10]; got != want {
+		if got, want := entry[geozip.Longitude], fields[10]; got != want {
 			t.Errorf("entries[%d]: Longitude = %v, want %v", idx, got, want)
 		}
-		if got, want := entry[postcode.Accuracy], fields[11]; got != want {
+		if got, want := entry[geozip.Accuracy], fields[11]; got != want {
 			t.Errorf("entries[%d]: Accuracy = %v, want %v", idx, got, want)
 		}
 	}

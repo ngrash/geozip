@@ -1,7 +1,7 @@
-# Postcode
+# Geozip
 
 ## Overview
-The `postcode` package is designed for fetching and parsing postal code data, specifically from the GeoNames geographical database (https://www.geonames.org/). 
+The `geozip` package is designed for fetching and parsing postal code data, specifically from the GeoNames geographical database (https://www.geonames.org/). 
 It offers a straightforward interface to download postal code data for various countries and parse them into a structured Go data type.
 
 ## Features
@@ -13,7 +13,7 @@ It offers a straightforward interface to download postal code data for various c
 To use the `postcode` package in your Go project, simply execute the following command:
 
 ```bash
-go get github.com/ngrash/postcode
+go get github.com/ngrash/geozip
 ```
 
 ## Usage
@@ -25,11 +25,11 @@ Example:
 ```go
 package main
 
-import "github.com/ngrash/postcode"
+import "github.com/ngrash/geozip"
 
 func main() {
     var previousEtag string
-    entries, modified, newEtag, err := postcode.FetchCountry("US", previousEtag)
+    entries, modified, newEtag, err := geozip.FetchCountry("US", previousEtag)
     if err != nil {
         // Handle error
     }

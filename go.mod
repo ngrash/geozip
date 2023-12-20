@@ -1,3 +1,3 @@
-module github.com/ngrash/postcode
+module github.com/ngrash/geozip
 
 go 1.21

@@ -1,6 +1,6 @@
-// Package postcode provides functionality specifically for downloading and parsing
+// Package geozip provides functionality specifically for downloading and parsing
 // postal code data from the GeoNames geographical database (https://www.geonames.org/).
-package postcode
+package geozip
 
 import (
 	"archive/zip"
