@@ -10,7 +10,7 @@ It offers a straightforward interface to download postal code data for various c
 - Parses the downloaded data into a structured format for easy use in Go applications.
 
 ## Installation
-To use the `postcode` package in your Go project, simply execute the following command:
+To use the `geozip` package in your Go project, simply execute the following command:
 
 ```bash
 go get github.com/ngrash/geozip
