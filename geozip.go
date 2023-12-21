@@ -111,7 +111,7 @@ func downloadURL(cc string) string {
 	return fmt.Sprintf("https://download.geonames.org/export/zip/%s.zip", cc)
 }
 
-func download(url, etag string) ([]byte, bool, string, error) {
+func download(url, etag string) (_ []byte, _ bool, _ string, err error) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, false, "", err
@@ -122,7 +122,9 @@ func download(url, etag string) ([]byte, bool, string, error) {
 		return nil, false, "", err
 	}
 	defer func(Body io.ReadCloser) {
-		err = Body.Close()
+		if closeErr := Body.Close(); closeErr != nil {
+			err = closeErr
+		}
 	}(resp.Body)
 
 	if resp.StatusCode == http.StatusNotModified {
